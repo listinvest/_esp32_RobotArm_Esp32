@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\System32\\Documents\\Arduino\\libraries\\VarSpeedServo",
+                "C:\\Users\\System32\\Documents\\Arduino\\libraries\\ServoEaser",
+                "C:\\Users\\System32\\Documents\\Arduino\\libraries\\ESP32-Arduino-Servo-Library\\src",
+                "C:\\Users\\System32\\Documents\\Arduino\\libraries\\ESP32Servo\\src",
+                "C:\\Users\\System32\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
+                "C:\\Users\\System32\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.1\\**",
+                "C:\\Users\\System32\\Desktop\\Engenharia\\UTFPR\\Crossbots\\Robot Arm\\Programação\\**"
+            ],
+            "forcedInclude": [],
+            "intelliSenseMode": "msvc-x64",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
