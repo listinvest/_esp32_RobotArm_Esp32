@@ -9,7 +9,9 @@
                 "C:\\Users\\System32\\Documents\\Arduino\\libraries\\ESP32Servo\\src",
                 "C:\\Users\\System32\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
                 "C:\\Users\\System32\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.1\\**",
-                "C:\\Users\\System32\\Desktop\\Engenharia\\UTFPR\\Crossbots\\Robot Arm\\Programação\\**"
+                "C:\\Users\\System32\\Desktop\\Engenharia\\UTFPR\\Crossbots\\Robot Arm\\Programação\\**",
+                "C:\\Users\\alexa\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.1\\**",
+                "C:\\Users\\alexa\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**"
             ],
             "forcedInclude": [],
             "intelliSenseMode": "msvc-x64",

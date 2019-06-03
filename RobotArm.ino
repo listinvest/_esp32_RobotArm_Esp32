@@ -118,9 +118,6 @@ void Task2code(void *parameter)
     }
     else
     {
-      servos.sendMovesSpeed(1, 50, 100);
-      servos.sendMovesSpeed(2, 180, 50);
-      servos.sendMovesSpeed(1, 180, 70);
       if (wifiOn == true)
       {
         wifiAP.wifiStop();

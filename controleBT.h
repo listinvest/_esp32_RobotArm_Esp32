@@ -13,9 +13,13 @@ private:
   uint8_t _potEixo1;
   uint8_t _potEixo2;
   uint8_t _potEixo3;
+  uint8_t _potEixo4;
+  uint8_t _potGarra;
   uint16_t potEixo1Valor;
   uint16_t potEixo2Valor;
   uint16_t potEixo3Valor;
+  uint16_t potEixo4Valor;
+  uint16_t potGarraValor;
 };
 
 #endif
