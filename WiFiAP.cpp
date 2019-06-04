@@ -3,8 +3,7 @@
 int valorSensor = 0;
 
 AsyncWebServer server80(80); //Comandos(Verificar WiFi e Enviar valor de Sensores pro aplicativo C#)
-AsyncWebServer server7(7);   //Controle Programavel por POST
-AsyncWebServer server18(18); //Controle Unitario por parametros GET
+AsyncWebServer server18(18); //Controle Unitario e Programavel por parametros GET
 
 IPAddress staticIP(10, 10, 10, 10);
 IPAddress gateway(10, 10, 10, 1);
@@ -59,21 +58,6 @@ void WiFiAP::wifiStart()
     });
     /***********************************************************************************************************************************************************/
 
-    /********* SERVIDOR 7 **************************************************************************************************************************************/
-    /*//Envie mensagens no body do HTTP pela route "/data" e a mensagem será escrita no monitor serial, se der certo retorna "Funcionou"  ---> Metodo POST
-    server7.on("/data", HTTP_POST, [&](AsyncWebServerRequest *request) {}, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
-            for (size_t i = 0; i < len; i++)
-            {
-                Serial.write(data[i]);
-            }
-            Serial.println();
-            request->send(200); });
-
-    server7.onNotFound([&](AsyncWebServerRequest *request) {
-        request->send(404);
-    });*/
-    /***********************************************************************************************************************************************************/
-
     /********* SERVIDOR 18 *************************************************************************************************************************************/
     //Para enviar parametros por GET, exemplo: HTTP://IP:18/?param1=10&paramx=hello
     server18.on("/", HTTP_GET, [&](AsyncWebServerRequest *request) {
@@ -96,15 +80,7 @@ void WiFiAP::wifiStart()
             }
             else if (p->name() == "param4")
             {
-                valorEixo4AP = p->value().toInt();
-            }
-            else if (p->name() == "param5")
-            {
-                valorGarraAP = p->value().toInt();
-            }
-            else if (p->name() == "param6")
-            {
-                frameSpeed = p->value().toInt();
+                laserStateAP = p->value().toInt();
             }
         }
         request->send(200);
@@ -116,13 +92,12 @@ void WiFiAP::wifiStart()
     /************************************************************************************************************************************************************/
 
     server80.begin();
-    //server7.begin();
     server18.begin();
 }
 
-void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3, uint16_t pot4, uint16_t pot5)
+void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
 {
-    uint16_t read[6] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, valorEixo4AP, valorGarraAP, frameSpeed};
+    uint16_t read[6] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, frameSpeed};
     for (int i = 0; i < 6; i++)
     {
         if (readyToSend == 200 && conexaoAplicativoOK == 200) //200, codigo recebido pelo app
@@ -135,8 +110,6 @@ void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t po
         leiturasWiFiAP18[0] = pot1;
         leiturasWiFiAP18[1] = pot2;
         leiturasWiFiAP18[2] = pot3;
-        leiturasWiFiAP18[3] = pot4;
-        leiturasWiFiAP18[4] = pot5;
     }
 }
 

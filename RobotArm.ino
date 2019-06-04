@@ -11,14 +11,13 @@
 //-------------------------------------------------------------------
 
 //----------------------------DEFINES--------------------------------
-/*PINO TOUCH*/
-#define touchSensor 4
+#define buttonControlType 4
 //-------------------------------------------------------------------
 
 //---------------------------CONSTRUTORES----------------------------
 TaskHandle_t Task1, Task2;
-Servos servos(13, 12, 14, 27, 26);        //Pinos dos servos ->recomendados 2,4,12-19,21-23,25-27,32-33
-Potenciometro pot(32, 35, 34, 39, 36);    // APENAS ADC1
+Servos servos(13, 12, 14);                //Pinos dos servos ->recomendados 2,4,12-19,21-23,25-27,32-33
+Potenciometro pot(32, 35, 34, 39);        // APENAS ADC1
 WiFiAP wifiAP("robotarm", "0xcrossbots"); // SSID e PW do AP a ser criado
 //-------------------------------------------------------------------
 
@@ -38,24 +37,8 @@ uint16_t *leiturasPotenciometro;
 uint16_t *leiturasWiFiAP18;
 //-------------------------------------------------------------------
 
-//----------------------------FUNCOES--------------------------------
-
-int detectTouch()
-{
-  if (touchRead(touchSensor) > 30)
-  {
-    return 0;
-  }
-  else
-  {
-    return 1;
-  }
-}
-//-------------------------------------------------------------------
-
 void setup()
 {
-
   xTaskCreatePinnedToCore(Task1code, "Task1", 10000, NULL, 0, &Task1, 0);
   xTaskCreatePinnedToCore(Task2code, "Task2", 10000, NULL, 0, &Task2, 1);
   Serial.begin(115200);
@@ -68,7 +51,7 @@ void Task1code(void *parameter)
 {
   for (;;)
   {
-    int valor = detectTouch();
+    int valor = digitalRead(buttonControlType);
     if (valor != ultimoValor)
     {
       Timer = millis();
@@ -100,12 +83,20 @@ void Task2code(void *parameter)
 {
   for (;;)
   {
-    if (controlType == 0) //Potenciometro
+    if (controlType == 0)  //Aguardando
+    {
+      if (wifiOn == true)
+      {
+        wifiAP.wifiStop();
+        wifiOn = false;
+      }
+    }
+    else if (controlType == 1) //Potenciometro
     {
       pot.potRead(leiturasPotenciometro);
-      servos.sendMoves(leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2], leiturasPotenciometro[3], leiturasPotenciometro[4]);
+      servos.sendMoves(leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
     }
-    else if (controlType == 1) //WiFiAP
+    else if (controlType == 2) //WiFiAP
     {
       if (wifiOn == false)
       {
@@ -113,8 +104,8 @@ void Task2code(void *parameter)
         wifiOn = true;
         pot.potRead(leiturasPotenciometro);
       }
-      wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2], leiturasPotenciometro[3], leiturasPotenciometro[4]);
-      servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2], leiturasWiFiAP18[3], leiturasWiFiAP18[4]);
+      wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
+      servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);
     }
     else
     {
