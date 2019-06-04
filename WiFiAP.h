@@ -1,6 +1,8 @@
 #ifndef WiFiAP_h
 #define WiFiAP_h
 
+#define qutItemFromWiFi 4 //3 eixos + laser
+
 #include "Arduino.h"
 #include "WiFi.h"
 #include <ESPAsyncWebServer.h>
@@ -22,8 +24,7 @@ private:
   uint16_t valorEixo1AP;
   uint16_t valorEixo2AP;
   uint16_t valorEixo3AP;
-  bool laserStateAP;
-  uint8_t frameSpeed;
+  uint16_t laserStateAP;
 };
 
 #endif

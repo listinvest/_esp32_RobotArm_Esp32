@@ -97,9 +97,10 @@ void WiFiAP::wifiStart()
 
 void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
 {
-    uint16_t read[6] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, frameSpeed};
-    for (int i = 0; i < 6; i++)
+    uint16_t read[qutItem] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
+    for (int i = 0; i < qutItem; i++)
     {
+        //talvez essa parte deixe lento
         if (readyToSend == 200 && conexaoAplicativoOK == 200) //200, codigo recebido pelo app
         {
             leiturasWiFiAP18[i] = read[i]; //leituras[i] === *(leituras + i)
@@ -110,6 +111,7 @@ void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t po
         leiturasWiFiAP18[0] = pot1;
         leiturasWiFiAP18[1] = pot2;
         leiturasWiFiAP18[2] = pot3;
+        leiturasWiFiAP18[0] = 0; //laser OFF
     }
 }
 

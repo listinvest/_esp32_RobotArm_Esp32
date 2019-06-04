@@ -24,8 +24,8 @@ void Potenciometro::potRead(uint16_t *leiturasPotenciometro)
   potEixo3Valor = map(potEixo3Valor, 0, 4095, 0, 180);
 
 
-  uint16_t read[4] = {potEixo1Valor, potEixo2Valor, potEixo3Valor, buttonLaserState};
-  for (int i = 0; i < 5; i++)
+  uint16_t read[qutItemFromPot] = {potEixo1Valor, potEixo2Valor, potEixo3Valor, buttonLaserState};
+  for (int i = 0; i < qutItemFromPot; i++)
   {
     leiturasPotenciometro[i] = read[i]; //leituras[i] === *(leituras + i)
   }

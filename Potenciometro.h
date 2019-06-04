@@ -1,6 +1,8 @@
 #ifndef Potenciometro_h
 #define Potenciometro_h
 
+#define qutItemFromPot 4 //3 eixos + laser
+
 #include "Arduino.h"
 
 class Potenciometro
