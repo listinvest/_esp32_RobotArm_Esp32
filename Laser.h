@@ -7,7 +7,7 @@ class Laser
 {
 public:
   Laser(uint8_t laserPin);
-  void onOff(bool isLaserON);
+  void onOff(uint8_t isLaserON);
 
 private:
   uint8_t _laserPin;

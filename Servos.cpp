@@ -44,8 +44,3 @@ void Servos::sendMoves(uint16_t leituraEixo1, uint16_t leituraEixo2, uint16_t le
     eixo3.write(leituraEixo3);
     delay(servo_TempoEspera);
 }
-
-void Servos::checkControlType(uint8_t controlType)
-{
-    controlType1 = controlType;
-}

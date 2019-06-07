@@ -65,7 +65,7 @@ void WiFiAP::wifiStart()
         for (int i = 0; i < paramsNr; i++)
         {
             AsyncWebParameter *p = request->getParam(i);
-            //Serial.println(p->name());
+            Serial.println(p->value());
             if (p->name() == "param1")
             {
                 valorEixo1AP = p->value().toInt();
@@ -95,10 +95,11 @@ void WiFiAP::wifiStart()
     server18.begin();
 }
 
+/*
 void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
 {
-    uint16_t read[qutItem] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
-    for (int i = 0; i < qutItem; i++)
+    uint16_t read[qutItemFromWiFi] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
+    for (int i = 0; i < qutItemFromWiFi; i++)
     {
         //talvez essa parte deixe lento
         if (readyToSend == 200 && conexaoAplicativoOK == 200) //200, codigo recebido pelo app
@@ -112,6 +113,17 @@ void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t po
         leiturasWiFiAP18[1] = pot2;
         leiturasWiFiAP18[2] = pot3;
         leiturasWiFiAP18[0] = 0; //laser OFF
+    }
+}
+*/
+
+//Função para testar com o Python e para testar a velocidade no C#
+void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
+{
+    uint16_t read[qutItemFromWiFi] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
+    for (int i = 0; i < qutItemFromWiFi; i++)
+    {
+        leiturasWiFiAP18[i] = read[i];
     }
 }
 

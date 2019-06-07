@@ -8,6 +8,7 @@
 #include "Servos.h"
 #include "Potenciometro.h"
 #include "WifiAP.h"
+#include "Laser.h"
 //-------------------------------------------------------------------
 
 //----------------------------DEFINES--------------------------------
@@ -17,7 +18,7 @@
 //---------------------------CONSTRUTORES----------------------------
 TaskHandle_t Task1, Task2;
 Servos servos(13, 12, 14);                //Pinos dos servos ->recomendados 2,4,12-19,21-23,25-27,32-33
-Potenciometro pot(32, 35, 34, 39);        // APENAS ADC1
+Potenciometro pot(32, 35, 34, 39);        // APENAS ADC1(potenciometros) + botao pro laser
 Laser laser(27);
 WiFiAP wifiAP("robotarm", "0xcrossbots"); // SSID e PW do AP a ser criado
 //-------------------------------------------------------------------
@@ -76,7 +77,6 @@ void Task1code(void *parameter)
       ultimoEstado = valor;
     }
     ultimoValor = valor;
-    servos.checkControlType(controlType);
   }
 }
 
@@ -90,14 +90,16 @@ void Task2code(void *parameter)
       {
         wifiAP.wifiStop();
         wifiOn = false;
+        Serial.println("Desliguei Wifi CT0");
       }
+      Serial.println("Estou no CT0");
     }
     else if (controlType == 1) //Potenciometro
     {
       pot.potRead(leiturasPotenciometro);
       laser.onOff(leiturasPotenciometro[3]);
       servos.sendMoves(leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
-      
+      Serial.println("Estou no CT1");
     }
     else if (controlType == 2) //WiFiAP
     {
@@ -106,10 +108,12 @@ void Task2code(void *parameter)
         wifiAP.wifiStart();
         wifiOn = true;
         pot.potRead(leiturasPotenciometro);
+        Serial.println("O Wifi foi ligado");
       }
       wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
       laser.onOff(leiturasWiFiAP18[3]);
       servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);
+      Serial.println("Estou no CT2");
     }
     else
     {
@@ -117,7 +121,9 @@ void Task2code(void *parameter)
       {
         wifiAP.wifiStop();
         wifiOn = false;
+        Serial.println("Desliguei o Wifi no Else(inatingivel)");
       }
+      Serial.println("Estou no Else, era pra ser inatingivel");
     }
   }
 }
