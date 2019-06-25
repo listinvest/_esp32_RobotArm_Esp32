@@ -86,6 +86,16 @@ void WiFiAP::wifiStart()
         request->send(200);
     });
 
+    server18.onNotFound([&](AsyncWebServerRequest *request) {
+        request->send(404);
+    });
+
+    /************************************************************************************************************************************************************/
+
+    server80.begin();
+    server18.begin();
+}
+
     /*
     void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18)
     {
@@ -118,15 +128,6 @@ void WiFiAP::wifiStart()
         }
     }
 
-    server18.onNotFound([&](AsyncWebServerRequest *request) {
-        request->send(404);
-    });
-
-    /************************************************************************************************************************************************************/
-
-    server80.begin();
-    server18.begin();
-}
 
 void WiFiAP::wifiStop()
 {

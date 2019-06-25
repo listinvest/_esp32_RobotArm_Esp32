@@ -96,7 +96,6 @@ void Task2code(void *parameter)
         //led ON ou green
         wifiAP.wifiStart();
         wifiOn = true;
-        pot.potRead(leiturasPotenciometro);
       }
       wifiAP.wifiReadOn18(leiturasWiFiAP18);
       laser.onOff(leiturasWiFiAP18[3]);
