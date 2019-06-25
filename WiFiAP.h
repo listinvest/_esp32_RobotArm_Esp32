@@ -12,7 +12,7 @@ class WiFiAP
 public:
   WiFiAP(char *ssid, char *password);
   void wifiStart();
-  void wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3);
+  void wifiReadOn18(uint16_t *leiturasWiFiAP18);
   void wifiStop();
 
 private:

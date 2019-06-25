@@ -87,7 +87,7 @@ void WiFiAP::wifiStart()
     });
 
     /*
-    void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
+    void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18)
     {
         uint16_t read[qutItemFromWiFi] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
         for (int i = 0; i < qutItemFromWiFi; i++)
@@ -100,16 +100,16 @@ void WiFiAP::wifiStart()
         }
         if (readyToSend != 200)
         {
-            leiturasWiFiAP18[0] = pot1;
-            leiturasWiFiAP18[1] = pot2;
-            leiturasWiFiAP18[2] = pot3;
+            leiturasWiFiAP18[0] = 90;
+            leiturasWiFiAP18[1] = 90;
+            leiturasWiFiAP18[2] = 90;
             leiturasWiFiAP18[0] = 0; //laser OFF
         }
     }
     */
 
     //Função para testar com o Python e para testar a velocidade no C#
-    void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18, uint16_t pot1, uint16_t pot2, uint16_t pot3)
+    void WiFiAP::wifiReadOn18(uint16_t *leiturasWiFiAP18)
     {
         uint16_t read[qutItemFromWiFi] = {valorEixo1AP, valorEixo2AP, valorEixo3AP, laserStateAP};
         for (int i = 0; i < qutItemFromWiFi; i++)

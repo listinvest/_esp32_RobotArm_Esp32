@@ -11,7 +11,7 @@
 //-------------------------------------------------------------------
 
 //----------------------------DEFINES--------------------------------
-#define buttonControlType 4
+#define buttonControlOnOff 4
 //-------------------------------------------------------------------
 
 //---------------------------CONSTRUTORES----------------------------
@@ -23,8 +23,7 @@ WiFiAP wifiAP("robotarm", "0xcrossbots"); // SSID e PW do AP a ser criado
 
 //----------------------------VARIAVEIS------------------------------
 bool wifiOn = false;
-const int numeroDeControles = 2;
-uint8_t controlType = 0;
+uint8_t controlOnOff = 0;
 
 /*Variaveis para o Timer da Troca de Controles*/
 int ultimoEstado = 0;
@@ -41,7 +40,7 @@ void setup()
 {
   xTaskCreatePinnedToCore(Task1code, "Task1", 10000, NULL, 0, &Task1, 0);
   xTaskCreatePinnedToCore(Task2code, "Task2", 10000, NULL, 0, &Task2, 1);
-  Serial.begin(115200);
+  //Serial.begin(115200);
   servos.inicializacao();
   leiturasWiFiAP18 = (uint16_t *)malloc(qutItemFromWiFi * sizeof(uint16_t));
 }
@@ -50,7 +49,7 @@ void Task1code(void *parameter)
 {
   for (;;)
   {
-    int valor = digitalRead(buttonControlType);
+    int valor = digitalRead(buttonControlOnOff);
     if (valor != ultimoValor)
     {
       Timer = millis();
@@ -61,13 +60,13 @@ void Task1code(void *parameter)
       {
         if (valor == 1)
         {
-          if (controlType < numeroDeControles)
+          if (controlOnOff < 1)
           {
-            controlType = controlType + 1;
+            controlOnOff = controlOnOff + 1;
           }
           else
           {
-            controlType = 0;
+            controlOnOff = 0;
           }
         }
       }
@@ -81,23 +80,25 @@ void Task2code(void *parameter)
 {
   for (;;)
   {
-    if (controlType == 0)  //Aguardando
+    if (controlOnOff == 0)  //Aguardando
     {
       if (wifiOn == true)
       {
+        //led OFF ou red
         wifiAP.wifiStop();
         wifiOn = false;
       }
     }
-    else if (controlType == 1) //WiFiAP
+    else if (controlOnOff == 1) //WiFiAP
     {
       if (wifiOn == false)
       {
+        //led ON ou green
         wifiAP.wifiStart();
         wifiOn = true;
         pot.potRead(leiturasPotenciometro);
       }
-      wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
+      wifiAP.wifiReadOn18(leiturasWiFiAP18);
       laser.onOff(leiturasWiFiAP18[3]);
       servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);
     }
