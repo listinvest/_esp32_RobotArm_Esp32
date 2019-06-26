@@ -10,7 +10,6 @@ public:
   Servos(uint8_t eixo1Pin, uint8_t eixo2Pin, uint8_t eixo3Pin);
   void inicializacao();
   void sendMoves(uint16_t leituraEixo1, uint16_t leituraEixo2, uint16_t leituraEixo3);
-  void sendMoves(uint16_t leituraEixo1, uint16_t leituraEixo2, uint16_t leituraEixo3, uint32_t servo_TempoEspera);
 
 private:
   uint8_t _eixo1Pin;

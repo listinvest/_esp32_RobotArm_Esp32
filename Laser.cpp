@@ -9,10 +9,15 @@ Laser::Laser(uint8_t laserPin)
     _laserPin = laserPin;
 }
 
-void Laser::onOff(uint8_t isLaserON)
+int Laser::onOff(uint8_t isLaserON, uint8_t nChances)
 {
-    if(isLaserON==1)
+    if(isLaserON==1 && nChances>0)
+    {
         digitalWrite(_laserPin,1);
+        delay(350);
+        return 1;
+    }
     else
         digitalWrite(_laserPin,0);
+    return 0;
 }

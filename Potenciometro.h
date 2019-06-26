@@ -10,7 +10,6 @@ class Potenciometro
 public:
   Potenciometro(uint8_t potEixo1, uint8_t potEixo2, uint8_t potEixo3, uint8_t buttonLaser);
   void potRead(uint16_t *leiturasPotenciometro);
-
 private:
   uint8_t _potEixo1;
   uint8_t _potEixo2;

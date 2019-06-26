@@ -12,7 +12,9 @@
 //-------------------------------------------------------------------
 
 //----------------------------DEFINES--------------------------------
+#define quantidadeDeChancesInicial 3
 #define buttonControlType 4
+#define buttonResetChances 2
 //-------------------------------------------------------------------
 
 //---------------------------CONSTRUTORES----------------------------
@@ -27,6 +29,10 @@ WiFiAP wifiAP("robotarm", "0xcrossbots"); // SSID e PW do AP a ser criado
 bool wifiOn = false;
 const int numeroDeControles = 2;
 uint8_t controlType = 0;
+
+int quantidadeDeChances = quantidadeDeChancesInicial;
+int chanceUsada = 0;
+int estadoBtnChances = 0;
 
 /*Variaveis para o Timer da Troca de Controles*/
 int ultimoEstado = 0;
@@ -53,6 +59,10 @@ void Task1code(void *parameter)
 {
   for (;;)
   {
+    
+    if (digitalRead(buttonResetChances)==1)
+      quantidadeDeChances = quantidadeDeChancesInicial;
+
     int valor = digitalRead(buttonControlType);
     if (valor != ultimoValor)
     {
@@ -90,40 +100,31 @@ void Task2code(void *parameter)
       {
         wifiAP.wifiStop();
         wifiOn = false;
-        Serial.println("Desliguei Wifi CT0");
       }
-      Serial.println("Estou no CT0");
     }
     else if (controlType == 1) //Potenciometro
     {
       pot.potRead(leiturasPotenciometro);
-      laser.onOff(leiturasPotenciometro[3]);
+      chanceUsada = laser.onOff(leiturasPotenciometro[3],quantidadeDeChances);
+      if(chanceUsada == 1)
+      {
+        chanceUsada = 0;
+        quantidadeDeChances--;
+        delay(1000);
+      }
       servos.sendMoves(leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
-      Serial.println("Estou no CT1");
     }
     else if (controlType == 2) //WiFiAP
     {
-      if (wifiOn == false)
+      /*if (wifiOn == false)
       {
         wifiAP.wifiStart();
         wifiOn = true;
         pot.potRead(leiturasPotenciometro);
-        Serial.println("O Wifi foi ligado");
       }
       wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
       laser.onOff(leiturasWiFiAP18[3]);
-      servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);
-      Serial.println("Estou no CT2");
-    }
-    else
-    {
-      if (wifiOn == true)
-      {
-        wifiAP.wifiStop();
-        wifiOn = false;
-        Serial.println("Desliguei o Wifi no Else(inatingivel)");
-      }
-      Serial.println("Estou no Else, era pra ser inatingivel");
+      servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);*/
     }
   }
 }
