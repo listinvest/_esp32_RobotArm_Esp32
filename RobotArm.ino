@@ -111,7 +111,13 @@ void Task2code(void *parameter)
         pot.potRead(leiturasPotenciometro);
       }
       wifiAP.wifiReadOn18(leiturasWiFiAP18, leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
-      laser.onOff(leiturasWiFiAP18[3]);
+      chanceUsada = laser.onOff(leiturasWiFiAP18[3]);
+      if(chanceUsada == 1)
+      {
+        chanceUsada = 0;
+        quantidadeDeChances--;
+        delay(500);
+      }
       servos.sendMoves(leiturasWiFiAP18[0], leiturasWiFiAP18[1], leiturasWiFiAP18[2]);
     }
     else if (controlType == 2) //Potenciometro
@@ -127,7 +133,7 @@ void Task2code(void *parameter)
       {
         chanceUsada = 0;
         quantidadeDeChances--;
-        delay(1000);
+        delay(500);
       }
       servos.sendMoves(leiturasPotenciometro[0], leiturasPotenciometro[1], leiturasPotenciometro[2]);
     }
