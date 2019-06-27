@@ -15,10 +15,17 @@ Servos::Servos(uint8_t eixo1Pin, uint8_t eixo2Pin, uint8_t eixo3Pin)
     _eixo1Pin = eixo1Pin;
     _eixo2Pin = eixo2Pin;
     _eixo3Pin = eixo3Pin;
-}
+    }
 
-void Servos::inicializacao()
+void Servos::inicializacao(uint8_t minEixo1, uint8_t maxEixo1, uint8_t minEixo2, uint8_t maxEixo2, uint8_t minEixo3, uint8_t maxEixo3)
 {
+    _minEixo1 = minEixo1;
+    _maxEixo1 = maxEixo1;
+    _minEixo2 = minEixo2;
+    _maxEixo2 = maxEixo2;
+    _minEixo3 = minEixo3;
+    _maxEixo3 = maxEixo3;
+
     eixo1.setPeriodHertz(50);//50Hz -> padrao
     eixo2.setPeriodHertz(50);
     eixo3.setPeriodHertz(50);
@@ -30,8 +37,11 @@ void Servos::inicializacao()
 
 void Servos::sendMoves(uint16_t leituraEixo1, uint16_t leituraEixo2, uint16_t leituraEixo3)
 {
-    eixo1.write(leituraEixo1);
-    eixo2.write(leituraEixo2);
-    eixo3.write(leituraEixo3);
+    if(leituraEixo1 > minEixo1 && leituraEixo1 < maxEixo1)
+        eixo1.write(leituraEixo1);
+    if(leituraEixo2 > minEixo2 && leituraEixo2 < maxEixo2)
+        eixo2.write(leituraEixo2);
+    if(leituraEixo2 > minEixo2 && leituraEixo2 < maxEixo2)
+        eixo3.write(leituraEixo3);
     delay(servo_Delay);
 }
